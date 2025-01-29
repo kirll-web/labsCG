@@ -9,6 +9,9 @@
 **/build/
 /gradle/wrapper/gradle-wrapper.properties
 
+.ninga_deps
+.ninga_log
+build.ninja
 # IntelliJ IDEA
 .idea/
 /*.iml
