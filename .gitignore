@@ -1,0 +1,174 @@
+# Kotlin
+/build/
+/out/
+/bin/
+
+# Gradle
+.gradle/
+/build/
+**/build/
+/gradle/wrapper/gradle-wrapper.properties
+
+# IntelliJ IDEA
+.idea/
+/*.iml
+*.ipr
+*.iws
+
+# Temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+*.DS_Store
+*.class
+
+.gradle/
+
+# TypeScript and Node.js
+/node_modules/
+/dist/
+/build/
+/temp/
+*.tsbuildinfo
+
+# TypeScript build artifacts
+*.js
+*.js.map
+*.d.ts
+*.d.ts.map
+
+# Logs
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# JetBrains IDEs specific
+.idea/
+*.iml
+
+# Android-specific
+.gradle/
+*.apk
+*.aar
+.cxx/
+local.properties
+
+# Lockfiles
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build artifacts
+bin/
+obj/
+Debug/
+Release/
+x64/
+Win32/
+ipch/
+*.suo
+*.sdf
+*.opensdf
+*.ncb
+
+# User-specific files
+*.user
+*.aps
+
+# Generated files
+*.ilk
+*.pdb
+*.idb
+*.tlog
+*.pch
+*.vcxproj.user
+
+# Visual Studio solution user options
+.vs/
+
+# Visual Studio cache directory
+.vscode/
+
+# NuGet Packages
+# Visual Studio
+.vscode/
+.vs/
+*.vcxproj*
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
+*.suo
+*.user
+*.db
+*.opendb
+*.VC.opendb
+*.VC.db
+
+# Build files
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+ARM/
+ARM64/
+*.obj
+*.exe
+*.dll
+*.lib
+*.pdb
+*.idb
+*.log
+*.tlog
+*.lastbuildstate
+*.unsuccessfulbuild
+*.o
+*.ilk
+
+# Intermediate files
+ipch/
+*.pch
+*.ipdb
+
+# Backup files
+*.bak
+*.tmp
+*.temp
+
+# CMake
+CMakeLists.txt.user
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Crash dumps
+*.mdmp
+*.dmp
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor-specific
+.idea/
+*.code-workspace
+
+# Other
+*.log
+*.cache
+*.pyc
+*.class
+*.out
+*.swp
+*.swo
+
