@@ -3,16 +3,22 @@
 #include <SFML/Graphics.hpp>
 
 
-sf::ConvexShape createCircle(float radius, sf::Vector2f position, int pointCount, sf::Color color) {
+//классы и функции с заглавной буквы
+sf::ConvexShape createCircle(
+    const float radius,
+    const sf::Vector2f position,
+    const int pointCount,
+    const sf::Color color
+) {
     sf::ConvexShape semiCircle;
-    semiCircle.setPointCount(pointCount + 2); // +2: центр и последняя точка
+    semiCircle.setPointCount(pointCount + 2);
 
-    semiCircle.setPoint(0, sf::Vector2f(0, radius)); // Центральная точка
+    semiCircle.setPoint(0, sf::Vector2f(0, radius));
 
     for (int i = 0; i <= pointCount; ++i) {
-        float angle = (-90.0f + (i * 180.0f / pointCount)) * (3.14159265f / 180.0f); // Радианы
-        float x = radius * std::cos(angle);
-        float y = radius * std::sin(angle) + radius;
+        const float angle = (-90.0f + (i * 180.0f / pointCount)) * (3.14159265f / 180.0f);
+        const float x = radius * std::cos(angle);
+        const float y = radius * std::sin(angle) + radius;
         semiCircle.setPoint(i + 1, sf::Vector2f(x, y));
     }
 
@@ -25,7 +31,7 @@ sf::ConvexShape createCircle(float radius, sf::Vector2f position, int pointCount
 
 class K {
 public:
-    K(sf::Color color) {
+    explicit K(sf::Color color) {
         sf::RectangleShape rectK1(sf::Vector2f(10, 230));
         rectK1.setFillColor(color);
         rectK1.setPosition(200, 70);
@@ -43,12 +49,18 @@ public:
         mShapes.push_back(std::make_unique<sf::RectangleShape>(rectK3));
     }
 
-    void draw(sf::RenderWindow &window, float speed, float deltaTime, float &direction, float &yOffset) {
-        float moveY = speed * deltaTime * direction;
+    void draw(
+        sf::RenderWindow &window,
+        const float speed,
+        const float deltaTime,
+        float &direction,
+        float &yOffset
+    ) const {
+        const float moveY = speed * deltaTime * direction;
         yOffset += moveY;
 
         // Меняем направление, если достигли границ (+50 вверх, обратно вниз)
-        if (yOffset >= 100.0f || yOffset <= 0.0f) {
+        if (yOffset >= 150.0f || yOffset <= -10.0f) {
             direction *= -1;
         }
 
@@ -100,11 +112,11 @@ public:
         /*Д*/
     }
 
-    void draw(sf::RenderWindow &window, float speed, float deltaTime, float &direction, float &yOffset) {
-        float moveY = speed * deltaTime * direction;
+    void draw(sf::RenderWindow &window, const float speed, const float deltaTime, float &direction,
+              float &yOffset) const {
+        const float moveY = speed * deltaTime * direction;
         yOffset += moveY;
 
-        // Меняем направление, если достигли границ (+50 вверх, обратно вниз)
         if (yOffset >= 70.0f || yOffset <= 0.0f) {
             direction *= -1;
         }
@@ -127,7 +139,7 @@ private:
 
 class V {
 public:
-    V(sf::Color color) {
+    explicit V(sf::Color color) {
         /*В*/
         auto circleB1 = createCircle(50, sf::Vector2f(350, 80), 30, color);
         auto circleB2 = createCircle(50, sf::Vector2f(350, 190), 30, color);
@@ -138,16 +150,17 @@ public:
         /*Д*/
     }
 
-    void draw(sf::RenderWindow &window, float speed, float deltaTime, float &direction, float &yOffset) {
-        float moveY = speed * deltaTime * direction;
-        yOffset += moveY;
 
-        if (yOffset >= 50.0f || yOffset <= 0.0f) {
-            direction *= -1;
+    void draw(sf::RenderWindow &window, const float deltaTime) {
+        velocity += acceleration * deltaTime;
+        yOffset += velocity * deltaTime;
+
+        if (yOffset >= maxOffset || yOffset <= minOffset) {
+            acceleration *= -1;
         }
 
         for (auto &shape: mShapes) {
-            shape->move(0, moveY);
+            shape->move(0, velocity * deltaTime);
             window.draw(*shape);
         }
     }
@@ -157,43 +170,49 @@ public:
             delete shape.get();
         }
     }
-
 private:
-    std::vector<std::unique_ptr<sf::Shape> > mShapes;
+    std::vector<std::unique_ptr<sf::Shape>> mShapes;
+    float yOffset = 0.0f;
+    float velocity = 0.0f;
+    float acceleration = 50.0f;
+    const float minOffset = 0.0f;
+    const float maxOffset = 50.0f;
 };
+
 
 int main() {
     auto color = sf::Color::Blue;
     auto transparentColor = sf::Color::Transparent;
-    auto d = D(color, transparentColor);
-    auto k = K(color);
+    const auto d = D(color, transparentColor);
+    const auto k = K(color);
     auto v = V(color);
 
-
+//todo разобраться с равноускоренной скоростью
     sf::RenderWindow window(sf::VideoMode(800, 600), "Dikov Kirill Vladimirovich");
-    float speed = 100.0f;
+    const float speed = 100.0f;
     sf::Clock clock;
-    float directionD= -1.0f;
+    float directionD = -1.0f;
     float directionK = -1.0f;
     float directionV = -1.0f;
     float yOffsetD = 3.0f;
     float yOffsetK = 10.0f;
-    float yOffsetV = 30.0f;  //todo перенести в классы
+    float yOffsetV = 30.0f; //todo перенести в классы
     while (window.isOpen()) {
-        sf::Event event;
+        sf::Event event{};
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
         }
 
-        float deltaTime = clock.restart().asSeconds();
-        window.clear(sf::Color::White); // Чёрный фон
-        // Двигаем все части букв вправо
+        const float deltaTime = clock.restart().asSeconds();
+        window.clear(sf::Color::White);
         d.draw(window, speed, deltaTime, directionD, yOffsetD);
         k.draw(window, speed, deltaTime, directionK, yOffsetK);
-        v.draw(window, speed, deltaTime, directionV, yOffsetV);
+        v.draw(window, deltaTime);
         window.display();
     }
+
+
     return 0;
 }
