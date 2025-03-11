@@ -1,6 +1,8 @@
 #include <stdexcept>
 #include "GLFW/glfw3.h"
 
+#include <iostream>
+
 class BaseWindow
 {
 public:
@@ -21,6 +23,7 @@ public:
 		glfwMakeContextCurrent(m_window);
 		glfwSetWindowUserPointer(m_window, this);
 		glfwSetWindowRefreshCallback(m_window, &BaseWindow::RefreshCallback);
+		glfwSetKeyCallback(m_window, &BaseWindow::KeyCallback);
 		glfwSetCursorPosCallback(m_window, &BaseWindow::CursorPosCallback);
 		glfwSetWindowSizeCallback(m_window, &BaseWindow::WindowSizeCallback);
 		glMatrixMode(GL_MODELVIEW);
@@ -58,6 +61,9 @@ public:
 
 protected:
 	virtual void Draw(int width, int height) = 0;
+	virtual void onKeyPressed(int key) {}
+	virtual void OnRefresh() {}
+	virtual void OnCursorPos([[maybe_unused]] double x, [[maybe_unused]] double y) {} // Пустая реализация по умолчанию
 
 private:
 	static GLFWwindow* CreateGLFWWindow(int w, int h, const char* title)
@@ -79,15 +85,22 @@ private:
 	static void WindowSizeCallback(GLFWwindow* window, int width, int height)
 	{}
 
+	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		if (auto instance = GetInstance(window))
+		{
+			if (action == GLFW_RELEASE)
+			{
+				instance->onKeyPressed(key);
+			}
+		}
+	}
+
 	static void CursorPosCallback(GLFWwindow* window, double x, double y)
 	{
 		if (auto instance = GetInstance(window))
 			instance->OnCursorPos(x, y);
 	}
-
-
-	virtual void OnRefresh() {}
-	virtual void OnCursorPos([[maybe_unused]] double x, [[maybe_unused]] double y) {} // Пустая реализация по умолчанию
 
 	GLFWwindow* m_window;
 	int m_windowSizeX, m_windowSizeY;

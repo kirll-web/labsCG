@@ -23,21 +23,11 @@ public:
 	void Draw() {
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glBegin(GL_QUADS);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		if (m_quads.size() > 1) {
-			auto it = m_quads[0];
-			for (size_t i = 1; i < m_quads.size(); i++) {
-				glVertex2d(it.first, it.second);
-				glVertex2d(m_quads[i].first, m_quads[i].second);
-				it = m_quads[i];
-			}
-			glVertex2d(it.first, it.second);
-			glVertex2d(m_quads[0].first, m_quads[0].second);
-		}
-		glEnd();
-
 		m_game.Draw();
+	}
+
+	void onKeyPressed(int key) {
+		m_game.onKeyPressed(key);
 	}
 
 private:

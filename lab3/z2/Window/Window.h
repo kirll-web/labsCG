@@ -29,6 +29,11 @@ private:
 		app.Draw();
 	}
 
+	void onKeyPressed(int key) override
+	{
+		app.onKeyPressed(key);
+	}
+
 	App &app;
 	int m_xMin;
 	int m_xMax;
