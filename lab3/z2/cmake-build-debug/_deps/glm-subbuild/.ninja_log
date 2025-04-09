@@ -1,0 +1,21 @@
+# ninja log v6
+1	65	7642016445196672	glm-populate-prefix/src/glm-populate-stamp/glm-populate-mkdir	44adbb10c64bc6ea
+1	65	7642016445196672	X:/labsCG/lab3/z2/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-mkdir	44adbb10c64bc6ea
+65	70294	7642017147467472	glm-populate-prefix/src/glm-populate-stamp/glm-populate-download	2866331e3508231a
+65	70294	7642017147467472	X:/labsCG/lab3/z2/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-download	2866331e3508231a
+70294	70566	7642017147527437	glm-populate-prefix/src/glm-populate-stamp/glm-populate-update	6f83f6e6899df349
+70294	70566	7642017147527437	X:/labsCG/lab3/z2/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-update	6f83f6e6899df349
+70566	70638	7642017150929995	glm-populate-prefix/src/glm-populate-stamp/glm-populate-patch	11b00f168ad8b0e7
+70566	70638	7642017150929995	X:/labsCG/lab3/z2/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-patch	11b00f168ad8b0e7
+70638	70736	7642017151899996	glm-populate-prefix/src/glm-populate-stamp/glm-populate-configure	bde629083e7fcd84
+70638	70736	7642017151899996	X:/labsCG/lab3/z2/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-configure	bde629083e7fcd84
+70737	70814	7642017152680001	glm-populate-prefix/src/glm-populate-stamp/glm-populate-build	f6a29b493252c0bc
+70737	70814	7642017152680001	X:/labsCG/lab3/z2/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-build	f6a29b493252c0bc
+70814	70895	7642017153480012	glm-populate-prefix/src/glm-populate-stamp/glm-populate-install	c2215026fe015a0f
+70814	70895	7642017153480012	X:/labsCG/lab3/z2/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-install	c2215026fe015a0f
+70895	70969	7642017154238714	glm-populate-prefix/src/glm-populate-stamp/glm-populate-test	73df92f39301cea9
+70895	70969	7642017154238714	X:/labsCG/lab3/z2/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-test	73df92f39301cea9
+70969	71075	7642017155292123	CMakeFiles/glm-populate-complete	3c57397225e04b7d
+70969	71075	7642017155292123	glm-populate-prefix/src/glm-populate-stamp/glm-populate-done	3c57397225e04b7d
+70969	71075	7642017155292123	X:/labsCG/lab3/z2/cmake-build-debug/_deps/glm-subbuild/CMakeFiles/glm-populate-complete	3c57397225e04b7d
+70969	71075	7642017155292123	X:/labsCG/lab3/z2/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-done	3c57397225e04b7d
