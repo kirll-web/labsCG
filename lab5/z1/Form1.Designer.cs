@@ -42,6 +42,7 @@ namespace z1
             glControl1.Resize += GlControlResize;
             glControl1.KeyDown += Form1_KeyDown;
             glControl1.KeyUp += Form1_KeyUp;
+            glControl1.MouseDown += GlControlMouseDown;
    
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;

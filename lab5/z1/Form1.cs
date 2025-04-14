@@ -11,9 +11,10 @@ public partial class Form1 : Form
     private LabirintViewModel _viewModel;
     private readonly Timer updateTimer; 
     private Cube _cube;
+    private Floor _floor;
+    private Sphere _skySphere;
     private bool[] _keysPressed;
-    private float _moveSpeed = 0.1f;
-    private float _rotationSpeed = 2f;
+    
     
     public Form1()
     {
@@ -31,6 +32,8 @@ public partial class Form1 : Form
         glControl1.Load += (sender, e) => 
         {
             _cube = new Cube(); 
+            _floor = new Floor();
+            _skySphere = new Sphere();
         };
     }
 
@@ -52,6 +55,7 @@ public partial class Form1 : Form
         GL.Enable(EnableCap.DepthTest);
         
         UpdateView();
+        glControl1.Focus();
     }
 
     private void UpdateView()
@@ -62,17 +66,20 @@ public partial class Form1 : Form
         GL.LoadMatrix(ref perspective);
         
         Matrix4 lookat = Matrix4.LookAt(
-            _viewModel.PlayerX, _viewModel.PlayerY, _viewModel.PlayerZ,
-            _viewModel.PlayerX + (float)Math.Sin(_viewModel.PlayerRotation), 
-            _viewModel.PlayerY, 
-            _viewModel.PlayerZ + (float)Math.Cos(_viewModel.PlayerRotation),
+            _viewModel.PlayerX, _viewModel.PlayerY, _viewModel.PlayerZ, _viewModel.PlayerX + (float)Math.Sin(_viewModel.PlayerRotation), 
+            _viewModel.PlayerY, _viewModel.PlayerZ + (float)Math.Cos(_viewModel.PlayerRotation),
             0, 1, 0);
             
         GL.MatrixMode(MatrixMode.Modelview);
         GL.LoadMatrix(ref lookat);
     }
+    
+    private void GlControlMouseDown(object sender, MouseEventArgs e)
+    {
+        glControl1.Focus();
+    }
 
-
+    
     private void GlControlPaint(object sender, PaintEventArgs e)
     {
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -82,44 +89,39 @@ public partial class Form1 : Form
         GL.Enable(EnableCap.DepthTest);
         GL.Enable(EnableCap.CullFace);
         GL.CullFace(CullFaceMode.Front);
+        _skySphere.Draw();
         for (int z = 0; z < _viewModel.Map.Length; z++)
         {
             for (int x = 0; x < _viewModel.Map[z].Length; x++)
             {
+                
                 if (_viewModel.Map[z][x] != 0)
                 {
-                    _cube.DrawCube(x, 0, z);
+                    _cube.Draw(x, 0, z, _viewModel.Map[z][x]);
+                }
+                else
+                {
+                    _floor.Draw(x, 0, z);
                 }
             }
         }
-        GL.Begin(BeginMode.Polygon);
-        GL.Color3(Color.Olive);
-        GL.Vertex3(0, 0, 0);
-        GL.Vertex3(0, 0, _viewModel.Map.Length);
-        GL.Vertex3(_viewModel.Map.Length, 0 , _viewModel.Map.Length);
-        GL.Vertex3(_viewModel.Map.Length, 0, 0);
-        GL.End();
-        
-        GL.Begin(BeginMode.Polygon);
-        GL.Color3(Color.Aqua);
-        GL.Vertex3(0, 1, 0);
-        GL.Vertex3(0, 1, _viewModel.Map.Length);
-        GL.Vertex3(_viewModel.Map.Length, 1 , _viewModel.Map.Length);
-        GL.Vertex3(_viewModel.Map.Length, 1, 0);
-        GL.End();
-        GL.CullFace(CullFaceMode.Back);
-        for (int z = 0; z < _viewModel.Map.Length; z++)
-        {
-            for (int x = 0; x < _viewModel.Map[z].Length; x++)
-            {
-                if (_viewModel.Map[z][x] != 0)
-                {
-                    _cube.DrawCube(x, 0, z);
-                }
-            }
-        }
-        
 
+        GL.CullFace(CullFaceMode.Back);
+        _skySphere.Draw();
+        for (int z = 0; z < _viewModel.Map.Length; z++)
+        {
+            for (int x = 0; x < _viewModel.Map[z].Length; x++)
+            {
+                if (_viewModel.Map[z][x] != 0)
+                {
+                    _cube.Draw(x, 0, z, _viewModel.Map[z][x]);
+                }
+                else
+                {
+                    _floor.Draw(x, 0, z);
+                }
+            }
+        }
         
         glControl1.SwapBuffers();
     }
@@ -132,60 +134,7 @@ public partial class Form1 : Form
 
     private void UpdateTimer_Tick(object sender, EventArgs e)
     {
-        bool moved = false;
-        
-        if (_keysPressed[(int)Keys.W])
-        {
-            Console.WriteLine("move w");
-            float newX = _viewModel.PlayerX + (float)Math.Sin(_viewModel.PlayerRotation) * _moveSpeed;
-            float newZ = _viewModel.PlayerZ + (float)Math.Cos(_viewModel.PlayerRotation) * _moveSpeed;
-
-
-            if (_viewModel.CanMoveTo(newX, newZ))
-            {
-                _viewModel.PlayerX = newX;
-            }
-         
-            if (_viewModel.CanMoveTo(newX, newZ))
-            {
-                _viewModel.PlayerZ = newZ;
-            }
-         
-                
-            moved = true;
-        }
-        
-        if (_keysPressed[(int)Keys.S])
-        {
-            float newX = _viewModel.PlayerX - (float)Math.Sin(_viewModel.PlayerRotation) * _moveSpeed;
-            float newZ = _viewModel.PlayerZ - (float)Math.Cos(_viewModel.PlayerRotation) * _moveSpeed;
-            
-            
-            if (_viewModel.CanMoveTo(newX, newZ))
-            {
-                _viewModel.PlayerX = newX;
-            }
-         
-            if (_viewModel.CanMoveTo(newX, newZ))
-            {
-                _viewModel.PlayerZ = newZ;
-            }
-            moved = true;
-        }
-        
-        if (_keysPressed[(int)Keys.A])
-        {
-            _viewModel.PlayerRotation += _rotationSpeed * 0.01f;
-            moved = true;
-        }
-        
-        if (_keysPressed[(int)Keys.D])
-        {
-            _viewModel.PlayerRotation -= _rotationSpeed * 0.01f;
-            moved = true;
-        }
-        
-        if (moved)
+        if (_viewModel.TryMove(_keysPressed))
         {
             UpdateView();
             glControl1.Invalidate();

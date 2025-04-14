@@ -146,60 +146,7 @@ public partial class Form1 : Form
 
     private void UpdateTimer_Tick(object sender, EventArgs e)
     {
-        bool moved = false;
-        
-        if (_keysPressed[(int)Keys.W])
-        {
-            Console.WriteLine("move w");
-            float newX = _viewModel.PlayerX + (float)Math.Sin(_viewModel.PlayerRotation) * _moveSpeed;
-            float newZ = _viewModel.PlayerZ + (float)Math.Cos(_viewModel.PlayerRotation) * _moveSpeed;
-
-
-            if (_viewModel.CanMoveTo(newX, newZ))
-            {
-                _viewModel.PlayerX = newX;
-            }
-         
-            if (_viewModel.CanMoveTo(newX, newZ))
-            {
-                _viewModel.PlayerZ = newZ;
-            }
-         
-                
-            moved = true;
-        }
-        
-        if (_keysPressed[(int)Keys.S])
-        {
-            float newX = _viewModel.PlayerX - (float)Math.Sin(_viewModel.PlayerRotation) * _moveSpeed;
-            float newZ = _viewModel.PlayerZ - (float)Math.Cos(_viewModel.PlayerRotation) * _moveSpeed;
-            
-            
-            if (_viewModel.CanMoveTo(newX, newZ))
-            {
-                _viewModel.PlayerX = newX;
-            }
-         
-            if (_viewModel.CanMoveTo(newX, newZ))
-            {
-                _viewModel.PlayerZ = newZ;
-            }
-            moved = true;
-        }
-        
-        if (_keysPressed[(int)Keys.A])
-        {
-            _viewModel.PlayerRotation += _rotationSpeed * 0.01f;
-            moved = true;
-        }
-        
-        if (_keysPressed[(int)Keys.D])
-        {
-            _viewModel.PlayerRotation -= _rotationSpeed * 0.01f;
-            moved = true;
-        }
-        
-        if (moved)
+        if (_viewModel.TryMove(_keysPressed))
         {
             UpdateView();
             glControl1.Invalidate();
