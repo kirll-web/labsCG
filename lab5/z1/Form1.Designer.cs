@@ -5,15 +5,8 @@ namespace z1
 {
     partial class Form1
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -47,9 +40,8 @@ namespace z1
             glControl1.Load += GlControlLoad;
             glControl1.Paint += GlControlPaint;
             glControl1.Resize += GlControlResize;
-            glControl1.MouseDown += GlControlMouseDown;
-            glControl1.MouseUp += GlControlMouseUp;
-            glControl1.MouseMove += GlControlMouseMove;
+            glControl1.KeyDown += Form1_KeyDown;
+            glControl1.KeyUp += Form1_KeyUp;
    
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
