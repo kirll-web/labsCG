@@ -42,7 +42,6 @@ public partial class Form1 : Form
     {
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         
-        // Вращение модели
         var modelY = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(_yRotate));
         
         var modelX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(_xRotate));
@@ -86,7 +85,6 @@ public partial class Form1 : Form
         
         _lastPos = args.Location;
 
-        // Накопление углов с учетом чувствительности
         _xRotate += dx * RotationSensitivity;
         _yRotate += dy * RotationSensitivity;
 

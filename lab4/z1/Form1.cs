@@ -36,13 +36,13 @@ public partial class Form1 : Form
 
     private void Form1_KeyDown(object sender, KeyEventArgs e)
     {
-        Console.WriteLine(e.KeyValue);
+        Console.WriteLine("down " + e.KeyValue);
         _keysPressed[e.KeyValue] = true;
     }
 
     private void Form1_KeyUp(object sender, KeyEventArgs e)
     {
-        Console.WriteLine(e.KeyValue);
+        Console.WriteLine("up " + e.KeyValue);
         _keysPressed[e.KeyValue] = false;
     }
 
@@ -52,6 +52,7 @@ public partial class Form1 : Form
         GL.Enable(EnableCap.DepthTest);
         
         UpdateView();
+        glControl1.Focus();
     }
 
     private void UpdateView()
@@ -72,7 +73,7 @@ public partial class Form1 : Form
         GL.LoadMatrix(ref lookat);
     }
 
-
+//выделить рисование лабиринта в отдельный класс
     private void GlControlPaint(object sender, PaintEventArgs e)
     {
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);

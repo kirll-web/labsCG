@@ -58,8 +58,7 @@ public class LabirintViewModel
             newX = PlayerX - (float)Math.Sin(PlayerRotation) * _moveSpeed;
             newZ = PlayerZ - (float)Math.Cos(PlayerRotation) * _moveSpeed;
         }
-    
-        // Проверяем движение по X и Z отдельно
+        
         if (CanMoveTo(newX, PlayerZ))
         {
             PlayerX = newX;
