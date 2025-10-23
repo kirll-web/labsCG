@@ -71,6 +71,9 @@ namespace z1
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.UseProgram(_shaderProgram);
+            float aspectRatio = (float)glControl1.Width / glControl1.Height;
+            int aspectLoc = GL.GetUniformLocation(_shaderProgram, "aspectRatio");
+            GL.Uniform1(aspectLoc, aspectRatio);
             GL.BindVertexArray(_vao);
             GL.DrawArrays(PrimitiveType.TriangleFan, 0, _vertexCount / 3);
 
